@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - shop@localhost" uuid="3ebc01ee-bad4-4667-b2c2-ab1251e52435">
+    <database-info product="MySQL" version="5.7.11-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="mixed" quoted-identifiers="upper"/>
+    <schema name="" catalog="shop"/>
+    <table name="categories" schema="" catalog="shop" type="TABLE">
+      <column name="id" sqlType="SMALLINT" precision="5" scale="0" nullable="false" jdbcType="5" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_goods_category_id" table="goods" schema="" catalog="shop" columns="category_id"/>
+    </table>
+    <table name="customers" schema="" catalog="shop" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_orders_customer_id" table="orders" schema="" catalog="shop" columns="customer_id"/>
+    </table>
+    <table name="goods" schema="" catalog="shop" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12"/>
+      <column name="category_id" sqlType="SMALLINT" precision="5" scale="0" nullable="true" jdbcType="5"/>
+      <column name="price" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="description" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_goods_category_id" columns="category_id" ref-table="categories" ref-schema="" ref-catalog="shop" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <exported-key name="fk_order_contents_good_id" table="order_contents" schema="" catalog="shop" columns="good_id"/>
+      <exported-key name="fk_stocks_good_id" table="stocks" schema="" catalog="shop" columns="good_id"/>
+      <index name="unique_name" unique="true" columns="name"/>
+      <index name="fk_goods_category_id" unique="false" columns="category_id"/>
+    </table>
+    <table name="order_contents" schema="" catalog="shop" type="TABLE">
+      <column name="order_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="good_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="quantity" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <foreign-key name="fk_order_contents_good_id" columns="good_id" ref-table="goods" ref-schema="" ref-catalog="shop" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_order_contents_order_id" columns="order_id" ref-table="orders" ref-schema="" ref-catalog="shop" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_order_contents_good_id" unique="false" columns="good_id"/>
+      <index name="fk_order_contents_order_id" unique="false" columns="order_id"/>
+    </table>
+    <table name="orders" schema="" catalog="shop" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="customer_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_orders_customer_id" columns="customer_id" ref-table="customers" ref-schema="" ref-catalog="shop" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <exported-key name="fk_order_contents_order_id" table="order_contents" schema="" catalog="shop" columns="order_id"/>
+      <index name="fk_orders_customer_id" unique="false" columns="customer_id"/>
+    </table>
+    <table name="stocks" schema="" catalog="shop" type="TABLE">
+      <column name="warehouse_id" sqlType="SMALLINT" precision="5" scale="0" nullable="false" jdbcType="5"/>
+      <column name="good_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="quantity" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <foreign-key name="fk_stocks_good_id" columns="good_id" ref-table="goods" ref-schema="" ref-catalog="shop" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_stocks_warehouse_id" columns="warehouse_id" ref-table="warehouses" ref-schema="" ref-catalog="shop" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <index name="fk_stocks_good_id" unique="false" columns="good_id"/>
+      <index name="fk_stocks_warehouse_id" unique="false" columns="warehouse_id"/>
+    </table>
+    <table name="warehouses" schema="" catalog="shop" type="TABLE">
+      <column name="id" sqlType="SMALLINT" precision="5" scale="0" nullable="false" jdbcType="5" autoIncrement="true"/>
+      <column name="city" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_stocks_warehouse_id" table="stocks" schema="" catalog="shop" columns="warehouse_id"/>
+    </table>
+  </data-source>
+</component>
