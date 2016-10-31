@@ -5,6 +5,12 @@ abstract class Controller
     protected $action;
     protected $defaultAction = 'index';
     protected $templatesRoot = 'views';
+    protected $renderer;
+
+    public function __construct()
+    {
+        $this->renderer = new TemplateRenderer();
+    }
 
     public function run($action)
     {
@@ -30,10 +36,7 @@ abstract class Controller
 
     protected function render($template, $params = [])
     {
-        extract($params);
-        $templatePath = "{$this->templatesRoot}/{$template}.php";
-        ob_start();
-        require($templatePath);
-        echo ob_get_clean();
+        $templatePath = "{$template}.html.twig";
+        echo $this->renderer->render($templatePath, $params);
     }
 }
