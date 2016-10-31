@@ -7,7 +7,7 @@ class Product extends Model
     protected $price;
     protected $description;
 
-    public function __construct($name, $category, $price, $description)
+    public function __construct($name = null, $category = null, $price = null, $description = null)
     {
         $this->name        = $name;
         $this->category    = $category;
@@ -62,8 +62,6 @@ class Product extends Model
         return $arr['id'];
     }
 
-    //Метод защищен, потому что я не хочу, чтобы кто-то создал объект с таким же названием как
-    //в базе, но с другой ценой и описанием, и присвоил этому объекту id из моей базы
     protected function setId()
     {
         if(!is_null($id = self::findId($this->name)))
@@ -102,8 +100,39 @@ class Product extends Model
                 ON c.id = g.category_id
                 WHERE g.id = :id",
             array('id' => $id),
-            self::class,
-            array(null, null, null, null) // - это чтобы конструктор не мешал
+            self::class
+        );
+    }
+
+    //Метод возвращает массив объектов класса Product с одинаковой категорией
+    public static function getByCategory($category)
+    {
+        return self::getConnection()->fetchObjects(
+            "SELECT g.id AS id, g.name AS name, c.name AS category,
+             g.price AS price, g.description AS description
+              FROM goods AS g
+              LEFT JOIN categories AS c
+              ON c.id = g.category_id
+              WHERE category_id = (SELECT id FROM categories WHERE name = :category)",
+            array('category' => $category),
+            self::class
+        );
+    }
+
+    //Метод возвращает массив объектов класса Product определенного заказа
+    public static function getByOrder($order_id)
+    {
+        return self::getConnection()->fetchObjects(
+            "SELECT g.name AS name, c.name AS category, g.price AS price,
+             g.description AS description, oc.quantity AS quantity
+              FROM order_contents AS oc
+              LEFT JOIN goods AS g
+              ON g.id = oc.good_id
+              LEFT JOIN categories AS c
+              ON c.id = g.category_id
+              WHERE order_id = :order_id",
+            array('order_id' => $order_id),
+            self::class
         );
     }
 }

@@ -66,19 +66,31 @@ class Db
         return $stmt->fetch();
     }
 
-    public function fetchObject($sql, $params, $class, $ctor_args)
+    public function fetchObject($sql, $params, $class)
     {
         $stmt = $this->prepare($sql);
         $stmt->execute($params);
-        $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, $class, $ctor_args);
+        $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, $class);
         return $stmt->fetch();
     }
 
-    public function fetchAll($sql)
+    public function fetchAll($sql, $params = null)
     {
         $stmt = $this->prepare($sql);
-        $stmt->execute();
+        $stmt->execute($params);
         return $stmt->fetchAll();
+    }
+
+    public function fetchObjects($sql, $params, $class)
+    {
+        $stmt = $this->prepare($sql);
+        $stmt->execute($params);
+        $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, $class);
+        $objects = [];
+        while ($obj = $stmt->fetch()){
+            $objects[] = $obj;
+        }
+        return $objects;
     }
 
 }

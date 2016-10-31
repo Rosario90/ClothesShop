@@ -11,7 +11,9 @@ class Basket extends Model
         $this->items[] = $item;
     }
 
-    public function takeItemFromWarehouse($id, $warehouse_id){
+
+
+    /*public function takeItemFromWarehouse($id, $warehouse_id){
         $pdo = self::getConnection()->getConnection();
         $obj = Product::getById($id);
         var_dump($obj);
@@ -27,6 +29,6 @@ class Basket extends Model
         } catch (PDOException $e) {
             $pdo->rollBack();
         }
-    }
+    }*/
 
 }
