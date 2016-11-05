@@ -1,10 +1,12 @@
-<?php
-var_dump($order);
+<div>
+    <h2> {{ order.id }} </h2>
 
-/*<div>
-    <h1><?=$order->getName()?></h1>
+    <h3> {{ order.date }} </h3>
 
-    <h2><?=$order->getPrice()?></h2>
-
-    <p><?=$order->getDescription()?></p>
-</div>*/
+    <h2> {{ order.customer }} </h2>
+    {% for line in order.contents %}
+        <div>
+            <h2> {{ line.product.name }} - {{ line.quantity }} </h2>
+        </div>
+    {% endfor %}
+</div>

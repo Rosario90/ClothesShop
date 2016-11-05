@@ -1,10 +1,10 @@
 <div>
-    <?php
-        foreach($productList as $product){
-            echo '<div>' . PHP_EOL . '<h1>' . $product->getName() . '</h1>';
-            echo '<h2>' . $product->getPrice() . '</h2>';
-            echo '<p>' . $product->getDescription() . '</p>' . PHP_EOL . '</div>';
-        }
-    ?>
+    {% for product in productList %}
+            <div>
+                <h1> {{ product.name }} </h1>
+                <h2> {{ product.price }} </h2>
+                <p> {{ product.description }} </p>
+            </div>
+    {% endfor %}
 </div>
 

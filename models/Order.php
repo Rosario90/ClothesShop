@@ -34,7 +34,8 @@ class Order extends Model
 
     public static function getById($id)
     {
-        $inst = self::getConnection()->fetchObject(
+        $conn = self::getConnection();
+        $inst = $conn->fetchObject(
             "SELECT o.id AS id, c.name AS customer, o.date AS date
               FROM orders AS o
               LEFT JOIN customers AS c
@@ -43,7 +44,7 @@ class Order extends Model
             array('id' => $id),
             self::class
         );
-        $arr = self::getConnection()->fetchAll(
+        $arr = $conn->fetchAll(
             "SELECT good_id, quantity
               FROM order_contents
               WHERE order_id = :id",
