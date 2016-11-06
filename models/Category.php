@@ -1,6 +1,6 @@
 <?php
 
-class Category extends Model
+class Category
 {
     protected $id;
     protected $name;
@@ -23,7 +23,7 @@ class Category extends Model
 
     public static function getAll()
     {
-        return self::getConnection()->fetchObjects(
+        return Db::getInstance()->fetchObjects(
             "SELECT id, name FROM categories",
             array(),
             self::class

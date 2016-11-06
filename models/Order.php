@@ -1,5 +1,5 @@
 <?php
-class Order extends Model
+class Order
 {
     protected $id;
     protected $customer;
@@ -34,7 +34,7 @@ class Order extends Model
 
     public static function getById($id)
     {
-        $conn = self::getConnection();
+        $conn = Db::getInstance();
         $inst = $conn->fetchObject(
             "SELECT o.id AS id, c.name AS customer, o.date AS date
               FROM orders AS o
