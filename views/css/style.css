@@ -122,14 +122,14 @@ body {
     color: #420504;
 }
 .item h2 {
-    padding: 3px;
+    padding: 5px;
     font-size: 14px;
     text-align: right;
     color: #804000;
 }
 
 .item p {
-    padding: 3px;
+    padding: 5px;
     text-align: justify;
 }
 

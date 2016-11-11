@@ -2,9 +2,9 @@
 
 abstract class Controller
 {
+    protected $name;
     protected $action;
     protected $defaultAction = 'index';
-    protected $templatesRoot = 'views';
     protected $layoutsRoot = 'layouts';
     protected $layout = 'main';
     protected $useLayout = true;
@@ -13,6 +13,7 @@ abstract class Controller
     public function __construct()
     {
         $this->renderer = new TemplateRenderer();
+        $this->name = substr(static::class, 0, -10);
     }
 
     public function run($action)
@@ -39,12 +40,13 @@ abstract class Controller
 
     protected function render($template, $params = [])
     {
+        $templatePath = "{$this->name}/{$template}";
         if($this->useLayout){
-            $content = $this->renderTemplate($template, $params);
+            $content = $this->renderTemplate($templatePath, $params);
             $layout = $this->layoutsRoot . '/' . $this->layout;
             echo $this->renderTemplate($layout, ['content' => $content]);
         } else {
-            echo $this->renderTemplate($template, $params);
+            echo $this->renderTemplate($templatePath, $params);
         }
 
     }
