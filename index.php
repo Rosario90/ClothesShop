@@ -1,6 +1,7 @@
 <?php
 header('Content-Type: text/html; charset=UTF-8');
 require_once 'services/Autoloader.php';
+require_once 'vendor/autoload.php';
 spl_autoload_register([new Autoloader(), 'getClass']);
 
 $controller = ucfirst($_REQUEST['c']) . 'Controller';

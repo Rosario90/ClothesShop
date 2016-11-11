@@ -1,6 +1,8 @@
 <?php
 class Db
 {
+    use TSingleton;
+
     const DBMS_NAME = 'mysql';
     const HOST = 'localhost';
     const DB_NAME = 'shop';
@@ -14,23 +16,9 @@ class Db
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     );
 
-    protected static $instance = null;
+    protected $conn;
 
-    public $conn;
-
-    private function __construct(){}
-    private function __clone(){}
-    private function __wakeup(){}
-
-    public static function getInstance()
-    {
-        if(is_null(self::$instance)) {
-            self::$instance = new static;
-        }
-        return self::$instance;
-    }
-
-    public function getConnection()
+    protected function getConnection()
     {
         if(is_null($this->conn)) {
             $this->conn = new PDO(
@@ -43,14 +31,9 @@ class Db
         return $this->conn;
     }
 
-    public function prepare($sql)
+    protected function prepare($sql)
     {
         return $this->getConnection()->prepare($sql);
-    }
-
-    public function query($sql)
-    {
-        return $this->getConnection()->query($sql);
     }
 
     public function execute($sql, $params)
@@ -66,19 +49,31 @@ class Db
         return $stmt->fetch();
     }
 
-    public function fetchObject($sql, $params, $class, $ctor_args)
+    public function fetchAll($sql, $params = null)
     {
         $stmt = $this->prepare($sql);
         $stmt->execute($params);
-        $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, $class, $ctor_args);
+        return $stmt->fetchAll();
+    }
+
+    public function fetchObject($sql, $params, $class)
+    {
+        $stmt = $this->prepare($sql);
+        $stmt->execute($params);
+        $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, $class);
         return $stmt->fetch();
     }
 
-    public function fetchAll($sql)
+    public function fetchObjects($sql, $params, $class)
     {
         $stmt = $this->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll();
+        $stmt->execute($params);
+        $stmt->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, $class);
+        $objects = [];
+        while ($obj = $stmt->fetch()){
+            $objects[] = $obj;
+        }
+        return $objects;
     }
 
 }

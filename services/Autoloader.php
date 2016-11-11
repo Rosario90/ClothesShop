@@ -5,7 +5,8 @@ class Autoloader
     protected $paths = [
         'controllers',
         'models',
-        'services'
+        'services',
+        'traits'
     ];
 
     public function getClass($className)
