@@ -1,10 +1,18 @@
-<div>
-    {% for product in productList %}
-            <div>
+<nav class="cat-menu">
+    <ul>
+        {% for category in categories %}
+            <li><a href="index.php?c=product&a=showCategory&cat={{ category.name }}"> {{ category.name }} </a></li>
+        {% endfor %}
+    </ul>
+</nav>
+<div class="content">
+    <div class="items-grid">
+        {% for product in productList %}
+            <div class="item">
                 <h1> {{ product.name }} </h1>
-                <h2> {{ product.price }} </h2>
+                <h2> {{ product.price }} Gold </h2>
                 <p> {{ product.description }} </p>
             </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 </div>
-

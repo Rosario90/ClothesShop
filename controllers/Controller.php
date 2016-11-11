@@ -5,6 +5,9 @@ abstract class Controller
     protected $action;
     protected $defaultAction = 'index';
     protected $templatesRoot = 'views';
+    protected $layoutsRoot = 'layouts';
+    protected $layout = 'main';
+    protected $useLayout = true;
     protected $renderer;
 
     public function __construct()
@@ -36,7 +39,19 @@ abstract class Controller
 
     protected function render($template, $params = [])
     {
+        if($this->useLayout){
+            $content = $this->renderTemplate($template, $params);
+            $layout = $this->layoutsRoot . '/' . $this->layout;
+            echo $this->renderTemplate($layout, ['content' => $content]);
+        } else {
+            echo $this->renderTemplate($template, $params);
+        }
+
+    }
+
+    protected function renderTemplate($template, $params = [])
+    {
         $templatePath = "{$template}.html.twig";
-        echo $this->renderer->render($templatePath, $params);
+        return $this->renderer->render($templatePath, $params);
     }
 }

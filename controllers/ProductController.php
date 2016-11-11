@@ -12,8 +12,15 @@ class ProductController extends Controller
     public function actionShowCategory()
     {
         $cat = $_GET['cat'];
+        $categories = Category::getAll();
         $products = Product::getByCategory($cat);
-        $this->render('ProductCategory', ['productList' => $products]);
+        $this->render(
+            'ProductCategory',
+            [
+                'categories' => $categories,
+                'productList' => $products
+            ]
+        );
     }
 
 

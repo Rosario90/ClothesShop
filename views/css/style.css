@@ -102,6 +102,37 @@ body {
     background: white;
 }
 
+.items-grid {
+    display: flex;
+    margin: 10px;
+}
+
+.item {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 10px;
+    background-color: #efefef;
+}
+.item h1 {
+    padding: 5px 3px;
+    font-size: 18px;
+    text-align: center;
+    color: #420504;
+}
+.item h2 {
+    padding: 3px;
+    font-size: 14px;
+    text-align: right;
+    color: #804000;
+}
+
+.item p {
+    padding: 3px;
+    text-align: justify;
+}
+
 footer {
     height: 100px;
     background: url("../img/header-background.jpg");
