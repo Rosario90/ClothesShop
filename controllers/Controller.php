@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class Controller
+ */
 abstract class Controller
 {
     protected $name;
@@ -33,10 +36,11 @@ abstract class Controller
 
     }
 
-    public function actionIndex()
-    {
-        echo "Это стартовая страничка";
-    }
+    /**
+     * Действие, выполняемое по умолчанию
+     * @return mixed
+     */
+    abstract public function actionIndex();
 
     protected function render($template, $params = [])
     {

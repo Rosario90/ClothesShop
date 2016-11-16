@@ -23,5 +23,9 @@ class ProductController extends Controller
         );
     }
 
+    public function actionIndex()
+    {
+        echo 'Hello';
+    }
 
 }

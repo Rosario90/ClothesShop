@@ -7,4 +7,9 @@ class OrderController extends Controller
         $order = Order::getById($id);
         $this->render('OrderDetails', ['order' => $order]);
     }
+
+    public function actionIndex()
+    {
+        echo 'Hello';
+    }
 }

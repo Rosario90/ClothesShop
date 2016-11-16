@@ -7,4 +7,10 @@ class CategoryController extends Controller
         $categories = Category::getAll();
         $this->render('CategoryAll', ['categories' => $categories]);
     }
+
+    public function actionIndex()
+    {
+        echo 'Hello';
+    }
+
 }
