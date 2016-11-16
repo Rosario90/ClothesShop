@@ -2,7 +2,7 @@
 
 class FrontController extends Controller
 {
-    protected $defaultController = 'Product';
+    protected $defaultController = 'product';
     protected $defaultRunAction = 'index';
 
     /**
@@ -11,7 +11,8 @@ class FrontController extends Controller
      */
     public function actionIndex()
     {
-        $this->registerAutoloads();
+        /*$this->registerAutoloads();*/
+
 
         $rm = new RequestManager;
         $controllerName = $rm->getController();
@@ -22,17 +23,16 @@ class FrontController extends Controller
             $action = $this->defaultAction;
         }
 
+        $controllerName = ucfirst($controllerName) . 'Controller';
         /** @var Controller $controller */
         $controller = new $controllerName;
         $controller->run($action);
     }
 
-    protected function registerAutoloads()
+    /*protected function registerAutoloads()
     {
-        require_once 'services/Autoloader.php';
-        spl_autoload_register([new Autoloader(), 'getClass']);
-        require_once 'vendor/autoload.php';
-    }
+
+    }*/
 
 
 }

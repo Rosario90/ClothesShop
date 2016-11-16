@@ -6,6 +6,7 @@ class RequestManager
     protected $controller;
     protected $action;
     protected $params;
+    protected $rules;
 
     /**
      * RequestManager constructor.
@@ -13,15 +14,23 @@ class RequestManager
      */
     public function __construct()
     {
+        $this->rules = [
+            '#(?P<controller>\w+)/(?P<action>\w+)[/]?(?P<params>.*)#u'
+        ];
         $this->parseRequest();
-        /*$this->params = [];*/
     }
 
     protected function parseRequest()
     {
-        $this->requestString = $_SERVER['REQUEST_URI'];
-        $res = explode("/", $this->requestString);
-        var_dump($res);
+        $this->requestString = preg_replace(['#^\/#u','#\/$#u'], '', substr($_SERVER['REQUEST_URI'], 12));
+        foreach ($this->rules as $rule){
+            if(preg_match_all($rule, $this->requestString, $matches)){
+                $this->controller = $matches['controller'][0];
+                $this->action = $matches['action'][0];
+                $this->params = explode("/", $matches['params'][0]);
+                break;
+            }
+        }
     }
 
 

@@ -16,10 +16,10 @@ abstract class Controller
     public function __construct()
     {
         $this->renderer = new TemplateRenderer();
-        $this->name = substr(static::class, 0, -10);
+        $this->name = lcfirst(substr(static::class, 0, -10));
     }
 
-    public function run($action)
+    public function run($action = '')
     {
         if(empty($action)){
             $action = $this->defaultAction;
