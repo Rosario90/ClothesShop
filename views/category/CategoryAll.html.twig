@@ -1,7 +1,7 @@
 <nav class="cat-menu">
     <ul>
         {% for category in categories %}
-            <li><a href="index.php?c=product&a=showCategory&cat={{ category.name }}"> {{ category.name }} </a></li>
+            <li><a href="../product/showCategory/{{ category.name }}"> {{ category.name }} </a></li>
         {% endfor %}
     </ul>
 </nav>

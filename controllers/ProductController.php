@@ -11,7 +11,8 @@ class ProductController extends Controller
 
     public function actionShowCategory()
     {
-        $cat = $_GET['cat'];
+        $rm = new RequestManager();
+        $cat = urldecode($rm->getParams()[0]);
         $categories = Category::getAll();
         $products = Product::getByCategory($cat);
         $this->render(
